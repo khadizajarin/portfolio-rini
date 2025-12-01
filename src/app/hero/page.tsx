@@ -1,3 +1,4 @@
+
 'use client';
 import { useState, useEffect } from 'react';
 import Image from "next/image";
@@ -7,26 +8,29 @@ const inter = Inter({ subsets: ['latin'], weight: ['400','600','700'] })
 const vollkorn = Vollkorn({ subsets: ['latin'], weight: ['400','600','700'] })
 
 export default function HeroSection() {
-  const [isDark, setIsDark] = useState(false);
-
-  // Set initial mode from localStorage or default
-  useEffect(() => {
-    const saved = localStorage.getItem('theme') === 'dark';
-    setIsDark(saved);
-    if (saved) document.documentElement.classList.add('dark');
-  }, []);
-
-  const toggleDarkMode = () => {
-    if (isDark) {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-      setIsDark(false);
-    } else {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-      setIsDark(true);
-    }
+  const [isDark, setIsDark] = useState(() => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('theme') === 'dark';
   }
+  return false;
+});
+
+useEffect(() => {
+  if (isDark) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+}, [isDark]);
+
+const toggleDarkMode = () => {
+  setIsDark(prev => {
+    const next = !prev;
+    localStorage.setItem('theme', next ? 'dark' : 'light');
+    return next;
+  });
+};
+
 
   return (
     <section className="w-full min-h-[80vh] flex items-center justify-center bg-[#F3E9DC] dark:bg-gray-900 relative">
@@ -44,17 +48,19 @@ export default function HeroSection() {
         {/* LEFT TEXT */}
         <div
           className="space-y-4 md:relative md:z-10"
-          style={{ transform: 'translateX(6rem) translateY(-7rem)' }}
+          style={{
+            transform: 'translateX(6rem) translateY(-7rem)',
+          }}
         >
-          <h1 className={`${vollkorn.className} text-8xl md:text-7xl tracking-tight font-extrabold text-neutral-600 dark:text-neutral-100`}>
+          <h1 className={`${vollkorn.className} text-6xl sm:text-5xl md:text-7xl tracking-tight font-extrabold text-neutral-600 dark:text-neutral-100`}>
             Nigar Meherin Rini
           </h1>
-          <p className="text-4xl text-[#9A3F3F] font-semibold dark:text-[#F5A9A9]">
+          <p className="text-3xl sm:text-2xl md:text-4xl text-[#9A3F3F] font-semibold dark:text-[#F5A9A9]">
             Journalist
           </p>
 
           {/* BUTTONS */}
-          <div className="pt-4 flex space-x-4">
+          <div className="pt-4 flex flex-wrap gap-4">
             <a
               href="#contact"
               className="px-6 py-3 bg-[#9A3F3F] text-white font-semibold rounded-lg shadow hover:bg-[#7a2f2f] dark:bg-[#F5A9A9] dark:text-gray-900 dark:hover:bg-[#d0a3a3] transition-colors"
@@ -68,29 +74,32 @@ export default function HeroSection() {
               Portfolio
             </a>
           </div>
-
         </div>
 
         {/* RIGHT IMAGE */}
         <div
           className="flex justify-center md:justify-end md:relative md:z-0"
-          style={{ transform: 'translateX(-6.25rem)' }}
+          style={{
+            transform: 'translateX(-6.25rem)',
+          }}
         >
           <Image
             src="/images/image.png"
             alt="Portrait"
             width={1000}
             height={1000}
-            className="w-full md:w-[90%] h-[80vh] object-cover shadow-md"
+            className="w-full sm:w-[95%] md:w-[90%] h-[60vh] sm:h-[50vh] md:h-[80vh] object-cover shadow-md"
           />
         </div>
 
         {/* Bottom text */}
         <div
           className="space-y-4 md:absolute md:z-10"
-          style={{ transform: 'translate(70rem, 13.75rem)' }}
+          style={{
+            transform: 'translate(45rem, 13rem)', // Adjusted for smaller screens
+          }}
         >
-          <p className="text-3xl font-semibold text-[#9A3F3F] dark:text-[#F5A9A9]">
+          <p className="text-2xl sm:text-xl md:text-3xl font-semibold text-[#9A3F3F] dark:text-[#F5A9A9]">
             @journalist
           </p>
         </div>
