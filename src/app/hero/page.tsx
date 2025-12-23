@@ -59,19 +59,22 @@ const toggleDarkMode = () => {
             Journalist
           </p>
 
+          <p className={`${vollkorn.className}`} >
+            Reporter at Somoy TV | Multimedia Journalist | Research-driven storyteller
+          </p>
           {/* BUTTONS */}
           <div className="pt-4 flex flex-wrap gap-4">
             <a
               href="#contact"
               className="px-6 py-3 bg-[#9A3F3F] text-white font-semibold rounded-lg shadow hover:bg-[#7a2f2f] dark:bg-[#F5A9A9] dark:text-gray-900 dark:hover:bg-[#d0a3a3] transition-colors"
             >
-              Contact Me
+              View Stories
             </a>
             <a
               href="#portfolio"
               className="px-6 py-3 border-2 border-[#9A3F3F] text-[#9A3F3F] font-semibold rounded-lg shadow hover:bg-[#9A3F3F] hover:text-white dark:border-[#F5A9A9] dark:text-[#F5A9A9] dark:hover:bg-[#F5A9A9] dark:hover:text-gray-900 transition-colors"
             >
-              Portfolio
+              Contact
             </a>
           </div>
         </div>
